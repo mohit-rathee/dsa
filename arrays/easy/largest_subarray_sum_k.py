@@ -18,7 +18,7 @@ def largest_subarray_with_sum_k(nums, k):
             if req_no in prefix_sum:
                 count = max(count, i - prefix_sum[req_no])
                 subarray[0] = prefix_sum[req_no]
-                subarray[1] = i
+                subarray[1] = prefix_sum[req_no]
         if sum not in prefix_sum:
             prefix_sum[sum] = i
 
