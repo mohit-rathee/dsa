@@ -1,6 +1,6 @@
 def reverse(arr, start=0, end=None):
     length = len(arr)
-    if not end:
+    if end is None:
         end = length - 1
     length = end - start + 1
     if (start == end):
