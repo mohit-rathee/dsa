@@ -13,7 +13,7 @@ def four_sum(arr, sum):
     result = []
     arr = sorted(arr)
     i_val = None
-    for i in range(len(arr) - 2):
+    for i in range(len(arr) - 3):
         # skip duplicate elements
         if arr[i] == i_val:
             continue
@@ -61,27 +61,27 @@ def four_sum_hashmap(arr, sum):
     for i in range(len(arr) - 2):
         i_val = arr[i]
 
-        hashset = set()
-
         for j in range(i + 1, len(arr)):
             j_val = arr[j]
+            hashset = set()
 
             for k in range(j + 1, len(arr)):
                 k_val = arr[k]
 
-                desired_num = sum - i_val - j_val - k_val
+                l_val = sum - i_val - j_val - k_val
                 # print(i_val, j_val, k_val, 'needs ', desired_num)
-                if desired_num in hashset:
-                    res = sorted([i_val, j_val, k_val, desired_num])
+                if l_val in hashset:
+                    res = sorted([i_val, j_val, k_val, l_val])
                     result.add(tuple(res))
                 hashset.add(k_val)
     print(list(result))
 
 
-# arr = [-1, -1, 0, 1, -4, 2, -1, -4, 2, 2, 2, 3, 5]
+arr = [-1, -1, 0, 1, -4, 2, -1, -4, 2, 2, 2, 3, 5]
 # arr = [-1, -1, 1, 0, 2, 1, -3]
-arr = [1, 0, -1, 0, -2, 2]
+# arr = [1, 0, -1, 0, -2, 2]
+# arr = [4, 3, 3, 4, 4, 2, 1, 2, 1, 1]
 
-sum = 0
+sum = 9
 four_sum(arr, sum)
 four_sum_hashmap(arr, sum)
