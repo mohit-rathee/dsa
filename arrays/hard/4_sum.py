@@ -58,10 +58,10 @@ def four_sum(arr, sum):
 
 def four_sum_hashmap(arr, sum):
     result = set()
-    for i in range(len(arr) - 2):
+    for i in range(len(arr) - 3):
         i_val = arr[i]
 
-        for j in range(i + 1, len(arr)):
+        for j in range(i + 1, len(arr) - 2):
             j_val = arr[j]
             hashset = set()
 
@@ -82,6 +82,6 @@ arr = [-1, -1, 0, 1, -4, 2, -1, -4, 2, 2, 2, 3, 5]
 # arr = [1, 0, -1, 0, -2, 2]
 # arr = [4, 3, 3, 4, 4, 2, 1, 2, 1, 1]
 
-sum = 9
+sum = 0
 four_sum(arr, sum)
 four_sum_hashmap(arr, sum)
