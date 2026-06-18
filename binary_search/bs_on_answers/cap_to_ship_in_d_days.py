@@ -1,10 +1,10 @@
 def capacity_to_ship_in_d_days(weights, days):
     print(weights, days)
-    #edge case
-    if(days==1):
+    # edge case
+    if days == 1:
         return sum(weights)
-    if(days>=len(weights)):
-        print('optimised')
+    if days >= len(weights):
+        print("optimised")
         return max(weights)
 
     # min cap possible is max(weights)
@@ -13,7 +13,7 @@ def capacity_to_ship_in_d_days(weights, days):
     while low < high:
         mid = (low + high) // 2
         # check for mid capacity
-        req_days = 0
+        req_days = 1
         current_load = 0
         for weight in weights:
             if current_load + weight <= mid:
@@ -21,12 +21,8 @@ def capacity_to_ship_in_d_days(weights, days):
             else:
                 req_days += 1
                 current_load = weight
-                if req_days >= days:
+                if req_days > days:
                     break
-
-        if current_load != 0:
-            req_days += 1
-            current_load = 0
 
         if req_days <= days:
             # mid in valid, and a potential ans
@@ -39,7 +35,7 @@ def capacity_to_ship_in_d_days(weights, days):
 
 weights = [5, 4, 5, 2, 3, 4, 5, 6]
 day = 5
-weights = [1, 2, 3, 4, 5]
-day = 2
+# weights = [1, 2, 3, 4, 5]
+# day = 2
 ans = capacity_to_ship_in_d_days(weights, day)
 print(ans)
