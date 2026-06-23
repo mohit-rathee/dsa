@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+file="$1"
+
+# remove .py extension
+module="${file%.py}"
+
+# replace / with .
+module="${module//\//.}"
+
+python -m "$module"
