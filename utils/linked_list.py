@@ -3,6 +3,7 @@ class ListNode:
         self.val = val
         self.next = next
         self.child = None
+        self.random = None
 
 
 class DoublyNode:
