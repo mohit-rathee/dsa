@@ -24,15 +24,19 @@ class Solution:
         elif s[i] == "+":
             sign = 1
             i += 1
-
+        # count number
         ans = self.helper(s, i, 0)
+        # handle number
         ans *= sign
+        # handle 32-bit int-overflow
+        ans = max(-2147483648, ans)
+        ans = min(2147483648, ans)
         print(ans)
         return ans
 
 
 sol = Solution()
-sol.atoi("   00001234560    ")
+sol.atoi("   2147483648222    ")
 sol.atoi("   22    ")
 sol.atoi("-")
 sol.atoi("+")
