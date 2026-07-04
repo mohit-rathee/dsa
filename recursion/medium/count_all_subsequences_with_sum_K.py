@@ -1,26 +1,7 @@
 class Solution:
-    def recurse_string(self, index, current):
-        n = len(self.arr)
-        if index == n:
-            # print(".", current)
-            self.result.append(current[:])
-            return
-        self.recurse_string(index + 1, current + self.string[index])
-        self.recurse_string(index + 1, current)
-
-    def generate_subsequences_string(self, string):
-        self.string = string
-        current = ""
-        index = 0
-        self.result = []
-        self.recurse_string(index, current)
-        for i in self.result:
-            print(i)
-
     def recurse(self, index, current):
         n = len(self.arr)
         if index == n:
-            # print(".", current)
             self.result.append(current[:])
             return
         current.append(self.arr[index])
@@ -37,16 +18,44 @@ class Solution:
         for i in self.result:
             print(i)
 
-    def count_all_subsequences_with_sum_K(self, K):
-        print(self.arr, K)
-        pass
+    def recurse_for_K(self, index, current, current_sum):
+        n = len(self.arr)
+
+        # only when you have positive numbers
+        if current_sum > self.K:
+            self.skip_count += 1
+            return
+
+        if index == n:
+            if current_sum == self.K:
+                self.result.append(current[:])
+            return
+
+        curr = self.arr[index]
+        current.append(curr)
+        self.recurse_for_K(index + 1, current, current_sum + curr)
+        current.pop()
+        self.recurse_for_K(index + 1, current, current_sum)
+
+    def count_all_subsequences_with_sum_K(self, arr, K):
+        self.arr = arr
+        self.K = K
+        index = 0
+        current = []
+        current_sum = 0
+        self.skip_count = 0
+        self.result = []
+        self.recurse_for_K(index, current, current_sum)
+        # for i in self.result:
+        #     print(i)
+        print(self.skip_count)
+        print(len(self.result))
 
 
-# arr = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-arr = [1, 2, 3]
+arr = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+# arr = [1, 2, 3]
 string = "abc"
 sol = Solution()
 K = 10
-# sol.count_all_subsequences_with_sum_K(K)
-sol.generate_subsequences(arr)
-sol.generate_subsequences_string(string)
+# sol.generate_subsequences(arr)
+sol.count_all_subsequences_with_sum_K(arr, K)
