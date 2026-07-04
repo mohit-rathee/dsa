@@ -18,42 +18,41 @@ class Solution:
         for i in self.result:
             print(i)
 
-    def recurse_for_K(self, index, current, current_sum):
+    def recurse_for_K(self, index, current_sum):
         n = len(self.arr)
 
         # only when you have positive numbers
         if current_sum > self.K:
             self.skip_count += 1
-            return
+            return 0
 
         if index == n:
             if current_sum == self.K:
-                self.result.append(current[:])
-            return
+                return 1
+            return 0
 
         curr = self.arr[index]
-        current.append(curr)
-        self.recurse_for_K(index + 1, current, current_sum + curr)
-        current.pop()
-        self.recurse_for_K(index + 1, current, current_sum)
+        take = self.recurse_for_K(index + 1, current_sum + curr)
+        skip = self.recurse_for_K(index + 1, current_sum)
+        return take + skip
 
     def count_all_subsequences_with_sum_K(self, arr, K):
         self.arr = arr
         self.K = K
         index = 0
-        current = []
         current_sum = 0
         self.skip_count = 0
-        self.result = []
-        self.recurse_for_K(index, current, current_sum)
+        result = self.recurse_for_K(index, current_sum)
         # for i in self.result:
         #     print(i)
-        print(self.skip_count)
-        print(len(self.result))
+        print(result)
 
 
-arr = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+# arr = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 # arr = [1, 2, 3]
+arr = [4, 9, 2, 5, 1]
+# arr = [4, 2, 10, 5, 1, 3]
+# K = 5
 string = "abc"
 sol = Solution()
 K = 10
