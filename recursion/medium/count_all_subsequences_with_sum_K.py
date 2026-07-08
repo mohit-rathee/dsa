@@ -48,13 +48,15 @@ class Solution:
         print(result)
 
 
-# arr = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+arr = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+K = 10
 # arr = [1, 2, 3]
-arr = [4, 9, 2, 5, 1]
+# K = 6
+# arr = [4, 9, 2, 5, 1]
+# K = 10
 # arr = [4, 2, 10, 5, 1, 3]
 # K = 5
 string = "abc"
 sol = Solution()
-K = 10
-# sol.generate_subsequences(arr)
+sol.generate_subsequences(arr)
 sol.count_all_subsequences_with_sum_K(arr, K)
