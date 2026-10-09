@@ -18,7 +18,9 @@ class Solution:
             return (1, 1)
         else:
             prev_zeros, prev_ones = self.helper(n - 1)
-            zeros = prev_zeros + prev_ones
+            # zero could be added to both type of strings
+            zeros = prev_zeros + prev_ones 
+            # one could be only be added to strings ending with 0
             ones = prev_zeros
             return (zeros, ones)
 

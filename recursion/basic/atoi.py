@@ -11,12 +11,15 @@ class Solution:
 
     def atoi(self, s):
         i = 0
+        # reach first character
         while i < len(s) and s[i] == " ":
             i += 1
 
+        # when dead end
         if i == len(s):
             return 0
 
+        # extract sign, to be multiplied later
         sign = 1
         if s[i] == "-":
             sign = -1
@@ -24,10 +27,12 @@ class Solution:
         elif s[i] == "+":
             sign = 1
             i += 1
+
         # count number
         ans = self.helper(s, i, 0)
         # handle number
         ans *= sign
+
         # handle 32-bit int-overflow
         ans = max(-2147483648, ans)
         ans = min(2147483648, ans)

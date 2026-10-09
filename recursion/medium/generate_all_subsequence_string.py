@@ -1,6 +1,3 @@
-from datetime import datetime
-
-
 class Solution:
     def generate_all_subsequence_string(self, s):
         if len(s) == 1:
