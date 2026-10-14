@@ -1,31 +1,24 @@
 class Solution:
     # queen = [row,col]
-    def is_valid(self, row, col, queens):
+    def is_valid(self, row, col, columns, diag1,diag2):
         # print(queens, row, col, end="")
-        for queen_pos in queens:
-            q_row, q_col = queen_pos
-            # being in same row is immpossible
-            # column check
-            if q_col == col:
-                # print("false")
-                return False
-            d_row = row - q_row
-            # upper-left diagonal check
-            d_col_ul = col - d_row
-            # upper-right diagonal check
-            d_col_ur = col + d_row
-            if q_col == d_col_ur or q_col == d_col_ul:
-                # print("false with diagonal")
-                return False
-        # print("turu")
+        if col in columns:
+            # print("false")
+            return False
+        # upper-left diagonal check
+        # upper-right diagonal check
+        if row+col in diag1 :
+            return False
+        if row-col in diag2 :
+            return False
         return True
 
-    def place_in_row(self, row, queens):
+    def place_in_row(self, row, columns,diag1,diag2):
         if row == self.n:
             # print("done")
             placement = []
-            for queen_pos in sorted(queens):
-                q_row, q_col = queen_pos
+            for index, queen_pos in enumerate(columns):
+                q_col = queen_pos
                 res_row = ["." for i in range(self.n)]
                 res_row[q_col] = "Q"
                 placement.append("".join(res_row))
@@ -33,17 +26,23 @@ class Solution:
             return
         for col in range(self.n):
             # check if valid
-            if self.is_valid(row, col, queens):
-                queens.add((row, col))
-                self.place_in_row(row + 1, queens)
-                queens.remove((row, col))
+            if self.is_valid(row, col, columns,diag1,diag2):
+                columns.append(col)
+                diag1.add(row+col)
+                diag2.add(row-col)
+                self.place_in_row(row + 1, columns,diag1,diag2)
+                columns.remove(col)
+                diag1.remove(row+col)
+                diag2.remove(row-col)
         # print(row, queens)
 
     def n_queen(self, n):
         self.n = n
-        queens = set()
+        columns = []
+        diag1 = set()
+        diag2 = set()
         self.result = []
-        self.place_in_row(0, queens)
+        self.place_in_row(0, columns,diag1,diag2)
         # print(n)
         for p in self.result:
             for r in p:
@@ -55,4 +54,4 @@ class Solution:
 
 
 sol = Solution()
-sol.n_queen(9)
+sol.n_queen(4)
