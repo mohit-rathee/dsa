@@ -3,10 +3,10 @@ from utils.matrix import printgrid
 
 class Solution:
     directions = {
-            'U':[-1,0], # up
-            'D':[1,0],  # down
             'L':[0,-1], # left
             'R':[0,1],  # right
+            'U':[-1,0], # up
+            'D':[1,0],  # down
             }
 
     def is_valid(self,x,y,maze):
@@ -18,29 +18,31 @@ class Solution:
 
     def mark_and_move(self,x,y,maze,path):
         if not self.is_valid(x,y,maze):
-            return
+            return None
         if maze[x][y] == 0:     # movement is not allowed
-            return
+            return None
         if maze[x][y] == '*':   # cell already visited
             return
         if x == len(maze)-1 and y == len(maze[0])-1:
             #done
-            result = ''.join(path)
-            self.result.append(result)
-            return
+            this_path = ''.join(path)
+            return [this_path]
         # mark rat if possible
         maze[x][y] = '*'
         #move in next direction
+        result = []
         for dir, dir_vec in self.directions.items():
             dx,dy = dir_vec
             nx = x+dx
             ny = y+dy
             path.append(dir)
-            self.mark_and_move(nx,ny,maze,path)
+            res = self.mark_and_move(nx,ny,maze,path)
+            if res:
+                result+=res
             path.pop()
 
-        # unmark rat
         maze[x][y] = 1
+        return result 
 
 
     def rat_in_a_maze(self,maze):
@@ -51,11 +53,10 @@ class Solution:
             return []
         # THINK:
             # YES : mark each cell we visited in a path with '*'
-        self.result = []
         path = []
-        self.mark_and_move(0,0,maze,path)
-        print(self.result)
-        return self.result
+        result = self.mark_and_move(0,0,maze,path)
+        print(result)
+        return result
 
 sol = Solution()
 maze = [ 
