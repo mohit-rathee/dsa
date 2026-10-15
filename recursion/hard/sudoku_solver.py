@@ -2,62 +2,95 @@ from utils.matrix import printgrid
 
 
 class Solution:
-    def find_empty_cell(self, sudoku):
-        # 9*9
-        for x in range(len(sudoku)):
-            for y in range(len(sudoku)):
-                if sudoku[x][y] == ".":
-                    return [x, y]
-        return False
+    def find_best_cell_and_candidates(self, sudoku):
+        best_cell = None
+        best_candidates = None
 
-    def is_valid(self, sudoku, row, col, number):
-        for i in range(len(sudoku)):
-            if sudoku[row][i] == str(number):
-                return False
-            if sudoku[i][col] == str(number):
-                return False
+        for row in range(9):
+            for col in range(9):
+                if sudoku[row][col] != ".":
+                    continue
 
-            # index of grid's first index
-            grid_x = (row // 3) * 3
-            grid_y = (col // 3) * 3
+                candidates = self.get_candidates(sudoku, row, col)
 
-            dx = i // 3
-            dy = i % 3
+                # Impossible branch: no candidate for this empty cell
+                if not candidates:
+                    return (row, col), set()
 
-            nx = grid_x + dx
-            ny = grid_y + dy
-            if sudoku[nx][ny] == str(number):
-                return False
+                # Keep the cell with the fewest candidates
+                if best_candidates is None or len(candidates) < len(best_candidates):
+                    best_cell = (row, col)
+                    best_candidates = candidates
 
-        return True
+                    # Can't improve on one candidate
+                    if len(best_candidates) == 1:
+                        return best_cell, best_candidates
+
+        # No empty cells remain
+        if best_cell is None:
+            return None
+
+        return best_cell, best_candidates
+
+    def get_candidates(self, sudoku, row, col):
+        candidates = set(range(1, 10))
+
+        for i in range(9):
+            row_val = sudoku[row][i]
+            if row_val != ".":
+                candidates.discard(int(row_val))
+
+            col_val = sudoku[i][col]
+            if col_val != ".":
+                candidates.discard(int(col_val))
+
+            # Check the 3x3 subgrid
+            nx = (row // 3) * 3 + i // 3
+            ny = (col // 3) * 3 + i % 3
+
+            grid_val = sudoku[nx][ny]
+            if grid_val != ".":
+                candidates.discard(int(grid_val))
+
+        return candidates
 
     def find_ans(self, sudoku):
-        # 1. find first empty #(optimize by choosing most crowded cell)
-        # 2. place all possible values
-        empty_cell = self.find_empty_cell(sudoku)
-        if not empty_cell:
-            # solution done
+        selection = self.find_best_cell_and_candidates(sudoku)
+
+        # No empty cells: solved
+        if selection is None:
             return True
 
-        x, y = empty_cell
-        for number in range(1, 10):
-            # check if number is valid or not
-            if not self.is_valid(sudoku, x, y, number):
-                continue
-            # mark number
-            sudoku[x][y] = str(number)
-            # recurse
-            result = self.find_ans(sudoku)
-            if result:
+        cell, candidates = selection
+
+        # Empty cell with no valid candidates: contradiction
+        if not candidates:
+            return False
+
+        row, col = cell
+
+        for number in candidates:
+            sudoku[row][col] = str(number)
+
+            if self.find_ans(sudoku):
                 return True
-            # unmark it
-            sudoku[x][y] = "."
+
+            # Backtrack
+            sudoku[row][col] = "."
+
+        return False
 
     def sudoku_solver(self, sudoku):
         printgrid(sudoku)
-        self.find_ans(sudoku)
-        printgrid(sudoku)
-        pass
+
+        solved = self.find_ans(sudoku)
+
+        if solved:
+            # printgrid(sudoku)
+            return sudoku
+
+        # print("No solution exists.")
+        return None
 
 
 sol = Solution()
