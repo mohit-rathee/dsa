@@ -1,6 +1,14 @@
 from utils.matrix import printgrid
 
 
+# TODO: Optimize Sudoku solver by maintaining candidate sets
+#       for every empty cell and updating only affected peers
+#       when placing a number.
+#       Implement an undo trail/log that records each candidate
+#       removal and uses checkpoints to restore changes during
+#       backtracking, without accidentally restoring invalid candidates.
+
+
 class Solution:
     def find_best_cell_and_candidates(self, sudoku):
         best_cell = None
@@ -86,7 +94,7 @@ class Solution:
         solved = self.find_ans(sudoku)
 
         if solved:
-            # printgrid(sudoku)
+            printgrid(sudoku)
             return sudoku
 
         # print("No solution exists.")
