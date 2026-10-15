@@ -1,4 +1,6 @@
 def printgrid(grid):
     for row in grid:
-        print(row)
+        for item in row:
+            print(item,end=' ')
+        print()
     print()
