@@ -36,22 +36,24 @@ class Solution:
                 diag2.remove(row-col)
         # print(row, queens)
 
-    def n_queen(self, n):
+    def SolveNQueen(self, n):
         self.n = n
         columns = []
         diag1 = set()
         diag2 = set()
         self.result = []
         self.place_in_row(0, columns,diag1,diag2)
-        # print(n)
+        print(n)
         for p in self.result:
             for r in p:
                 for c in r:
                     print(c,end = ' ')
                 print()
             print()
+        print('done')
         return self.result
 
 
+
 sol = Solution()
-sol.n_queen(4)
+sol.SolveNQueen(5)
