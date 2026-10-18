@@ -20,7 +20,6 @@ class Solution:
     def recurse_II(self, idx, current):
         n = len(self.arr)
 
-        # base case
         self.result.append(current[:])
 
         for i in range(idx, n):

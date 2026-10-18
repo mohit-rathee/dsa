@@ -41,9 +41,10 @@ class Solution:
             return
         curr = self.s[idx]
         if len(current) > 0:
-            # create new partition
-            newCurrent = current + [curr]
-            self.recurce(idx + 1, newCurrent)
+            if self.isPalindrome(current[-1]):
+                # create new partition
+                newCurrent = current + [curr]
+                self.recurce(idx + 1, newCurrent)
             # append to to last partition
             newCurrent = current[:]
             newCurrent[-1] = newCurrent[-1] + curr
