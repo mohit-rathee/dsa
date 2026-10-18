@@ -51,6 +51,19 @@ class Solution:
         print(count)
         return count
 
+    def min_bit_flips(self, start, goal):
+        print(bin(start), bin(goal))
+        ans = start ^ goal
+        ans = self.count_set_bits(ans)
+        return ans
+
+    def get_index_of_rightmost_1(self,num):
+        only_righmost_bit_kept = num & -num
+        ans = (only_righmost_bit_kept).bit_length()-1
+        print(ans)
+        return ans
+
+
 
 sol = Solution()
 sol.is_ith_bit_set(12, 1)
@@ -59,3 +72,5 @@ sol.is_odd(5)
 sol.is_power_of_2(16)
 sol.set_rightmost_0(13)
 sol.count_set_bits(19)
+sol.min_bit_flips(1, 16)
+sol.get_index_of_rightmost_1(8)
