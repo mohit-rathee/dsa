@@ -1,10 +1,13 @@
 class Solution:
     def frac_knapsack(self, val,wi,cap):
         n = len(val)
-        worth_ratio = [val[i]/wt[i] for i in range(n)]
-        sorted_worth_ratio = sorted(enumerate(worth_ratio),key=lambda r:r[1],reverse=True)
-        total_value = 0
-        for idx,_ in sorted_worth_ratio:
+        worth_ratio_order = sorted(
+                range(n),
+                key=lambda i: val[i]/wt[i],
+                reverse=True
+                )
+        total_value = 0.0
+        for idx in worth_ratio_order:
             value, weight = val[idx],wt[idx]
             if cap >= weight:
                 cap-= weight
@@ -15,7 +18,7 @@ class Solution:
                 # print('for',value,weight,portion,'%',round(value*portion,6))
                 total_value+=round(value*portion,6)
                 break
-        # print(total_value)
+        print(total_value)
         return total_value
                 
 
