@@ -1,4 +1,28 @@
 class Solution:
+    def standard_candy(self, ratings):
+        print(ratings)
+        n = len(ratings)
+        if n == 0:
+            return 0
+
+        left = [1] * n
+        right = [1] * n
+
+        # Pass 1: Left to right
+        for i in range(1, n):
+            if ratings[i] > ratings[i - 1]:
+                left[i] = left[i - 1] + 1
+
+        # Pass 2: Right to left
+        for i in range(n - 2, -1, -1):
+            if ratings[i] > ratings[i + 1]:
+                right[i] = right[i + 1] + 1
+
+        # Combine both constraints
+        candies = [max(left[i], right[i]) for i in range(n)]
+
+        return sum(candies)
+
     def candy(self, ratings):
         print(ratings)
         if not len(ratings):
@@ -63,6 +87,7 @@ ratings = [3, 4, 3, 3, 2, 1]  # 10
 ratings = [1, 2, 2]  # 4
 ratings = [1, 2, 2, 1]  # 6
 ratings = [1, 2, 3, 2, 2, 1]  # 10
-ratings = [0, 1, 0]  # 4
+# ratings = [0, 1, 0]  # 4
 
 print(sol.candy(ratings))
+print(sol.standard_candy(ratings))
