@@ -24,6 +24,7 @@ class Stack:
     def pop(self):
         if self.end >= 0:
             top_el = self.arr[self.end]
+            self.arr[self.end] = None
             self.end -= 1
             return top_el
 
