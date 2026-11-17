@@ -37,3 +37,8 @@ class Stack:
 
     def __len__(self):
         return self.end + 1
+
+    def to_list(self):
+        if self.end == -1:
+            return []
+        return self.arr[: self.end + 1]
